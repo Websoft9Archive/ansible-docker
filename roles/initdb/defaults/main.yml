@@ -1,0 +1,8 @@
+initdb_vars:
+  db_service_name: 
+    # - mysql
+    # - postgresql
+  app_service_name: 
+    # - redmine
+  db_config_path: 
+    # - /data/wwwroot/redmine/config/databases.yml

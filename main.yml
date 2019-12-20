@@ -1,0 +1,27 @@
+# 服务器前置任务(ubuntu使用 Centos项目注释或删掉)
+# - name: main
+#   hosts: all
+#   become: yes
+#   become_method: sudo
+#   gather_facts: False
+#   pre_tasks:
+#     - name: Install Python
+#       raw: sudo apt update && sudo apt-get -y install python
+#       ignore_errors: yes
+  
+# 核心任务
+
+- name: main
+  hosts: all
+  become: yes
+  become_method: sudo
+  vars_files:
+    - variables.yml
+
+  vars:
+    mysql_users: wordpress
+
+  roles:
+    - {role: common , tags: "common"}
+    - {role: mysql,tags: "mysql",mysql_version: 5.7,}
+    - {role: initdb}
