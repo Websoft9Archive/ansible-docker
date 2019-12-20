@@ -30,7 +30,7 @@ sudo ln -s docker-runc-current docker-runc
    ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-bkselect-websoft9.png)
 
 
-## 范例：部署MySQL容器
+## 部署MySQL容器
 
 下面详细介绍通过 Portainer 部署MySQL：
 
@@ -49,10 +49,11 @@ sudo ln -s docker-runc-current docker-runc
 3. 点击 Deploy the container 创建容器；
     
 4. 如果服务器安全组的3306端口已经开放，现在就可以在本地通过远程连接 MySQL 数据库
+   > MySQL8远程访问测试失败，报错：Authentication plugin caching_sha_password cannot be loaded...
 
-## 范例：部署WordPress容器
+## 部署WordPress容器
 
-下面详细介绍通过 Portainer 部署WordPress：
+下面详细介绍通过 Portainer 部署WordPress以及使用上一步的MySQL作为数据存储：
 
 1. 登录 Portainer ，打开【Containers】>【Add container】
    ![createcontainer](http://libs.websoft9.com/Websoft9/DocsPicture/zh/potainer/portainer-addcontainer-websoft9.png)
@@ -66,9 +67,16 @@ sudo ln -s docker-runc-current docker-runc
    * Env 环境变量设置：添加如所示的容器环境变量，对于MySQL镜像来说，数据库 root 密码**MySQL_ROOT_PASSWORD** 为必填变量，其他更多可选变量查看 [ MySQL镜像说明](https://hub.docker.com/_/mysql)
    * Restart policy：建议选择【Always】，使得容器无论在什么情况下停止总会自动重新启动；
 
-3. 点击 Deploy the container 创建容器；
+3. 点击 Deploy the container 创建容器，创建成功后查看映射的服务器端口号；
     
-4. 本地浏览器访问：*http://公网IP地址：端口* 即可访问 WordPress 的初始化安装界面
+4. 本地浏览器访问：*http://服务器公网IP：端口* 即可访问 WordPress 的初始化安装界面
+    ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/potainer/portainer-startinstall-1-websoft9.png)
+
+5. 此处如果你打算使用MySQL容器，数据库主机地址填写的是 **服务器公网IP:端口**
+    ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/potainer/portainer-startinstall-2-websoft9.png)
+
+6. 数据库验证通过后，系统提示正式“进行安装” 
+  ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/wordpress/wordpress-install003-websoft9.png)
 
 
 ## 进阶实战：Nginx 容器实现端口转发

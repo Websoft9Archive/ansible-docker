@@ -4,55 +4,32 @@
 
 只要服务器资源允许，单台服务器上可以运行成百上千个容器
 
-#### Docker-Sender是什么？
+#### 什么是Docker的C/S模式？
 
-Docker sender 是一个命令行应用程序，可用于将性能数据发送到 Docker server 进行处理。
+Docker安装后，在宿主机（服务器）端会运行一个 Docker Daemon 守护进程，同时也安装一个Docker客户端与这个守护进程通信。但客户端与守护进程是分离的，即可以在任何地方运行客户端，然后通过远程与守护进程通信。
+![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/docker-cs-websoft9.png)
 
-#### Docker-Git是什么？
+#### 是否可以通过SSH连接容器？
 
-Docker get 是一个命令行应用，它可以用于与 Docker agent 进行通信，并从 Docker agent 那里获取所需的信息。
+在Container上的 console 控制台可以很方便的使用命令操作
+![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-console-websoft9.png)
 
-#### 是否可以使用云平台的 RDS 作为 Docker 的数据库？
+#### 一个容器中可以运行多个应用吗？
 
-不建议使用非服务器上的第三方数据库
+可以。但是从微服务架构角度看，建议一个容器运行单个应用或单个进程
 
-#### Docker-Server 能在Windows服务器上部署吗？
+#### 容器中的服务是否可以被互联网访问？
 
-官方没有提供 Windows 上的安装方案
+通过与宿主机（服务器）进行端口映射，实现被互联网用户访问
 
-#### Docker数据库连接配置信息在哪里？
+#### 是否有可视化的 Docker 管理工具？
 
-数据库配置信息 [Docker 配置文件](/zh/stack-components.html#zabbix)中
+有，推荐使用 Portainer
 
-#### 如果没有域名是否可以部署 Docker？
+#### 是否可以修改 Docker 根目录？
 
-可以，访问`http://服务器公网IP/zabbix` 即可
+可以，但不建议修改
 
-#### 数据库 root 用户对应的密码是多少？
-
-密码存放在服务器相关文件中：`/credentials/password.txt`
-
-#### 是否有可视化的数据库管理工具？
-
-从安全角度考虑，本部署包中没有预装 phpMyAdmin
-
-#### 是否可以修改 Docker 的源码路径？
-
-不建议修改
-
-#### 如何修改上传的文件所属用户（组）和读写权限?
-
-```shell
-#例如：用户为 apache
-chown -R apache.apache /data/wwwroot
-
-#例如：用户为 nginx
-chown -R nginx.nginx /data/wwwroot
-
-#修改读写执行权限
-find /data/wwwroot -type d -exec chmod 750 {} \;
-find /data/wwwroot -type f -exec chmod 640 {} \;
-```
 #### 部署和安装有什么区别？
 
 部署是将一序列软件按照不同顺序，先后安装并配置到服务器的过程，是一个复杂的系统工程。  

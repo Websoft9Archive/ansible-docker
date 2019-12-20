@@ -22,23 +22,6 @@ yum update -y
 ```
 > 本部署包已预配置一个用于自动更新的计划任务。如果希望去掉自动更新，请删除对应的Cron
 
-## Docker 更新
+## Docker 更新升级
 
-如果要更新 Docker 的次要版本（例如，从 4.0.1 升级至 4.0.3），是非常容易的：
-
-```
-## 更新 Docker 所有组件
-sudo apt install --only-upgrade 'zabbix.*'
-
-## 更新 Docker server
-sudo apt install --only-upgrade 'zabbix-server.*'
-
-## 更新 Docker agent 
-sudo apt install --only-upgrade 'zabbix-agent.*'
-```
-
-## Docker 升级
-
-Docker 升级是指从低版本升到高版本，例如 3.0 to 4.0
-
-与升级有关的详细方案，请参考官方文档：[Docker 升级步骤](https://www.zabbix.com/documentation/4.0/zh/manual/installation/upgrade)
+上面的命令会同时升级Docker
