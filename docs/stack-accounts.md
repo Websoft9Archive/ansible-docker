@@ -2,24 +2,9 @@
 
 These accounts are required for Docker image installation and configuration
 
-## Docker
+## Portainer
 
-Following is the default Administrator account of Docker: 
-
-Administrator username: `Admin`  
-Administrator password: `zabbix`  
-
-Docker log in URL: *http://Internet IP/zabbix*
-
-## MariaDB
-
-* Administrator username: *`root`*
-* Administrator password: stored in the file of your server instance: */credentials/password.txt*. 
-   ![Run the cat command](https://libs.websoft9.com/Websoft9/DocsPicture/zh/common/catdbpassword-websoft9.png)
-
-   You use the **online SSH interface on Cloud Console** and run `cat /credentials/password.txt` command to get the database password
-
-> If you want to log in MySQL, refer to [MySQL Web interface Management](/admin-mysql.md)
+The administrator username and password is created by yourself when load Portainer at first time
 
 ## Linux
 

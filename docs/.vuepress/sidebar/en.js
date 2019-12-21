@@ -15,8 +15,8 @@ module.exports = [
         title: 'Best Practices',
         collapsable: false,
         children: [
-          '/solution-smtp',
-          '/solution-https',
+          '/solution-study',
+          '/solution-portainer',
           '/solution-backup',
           '/solution-upgrade',
           '/solution-more',
@@ -28,7 +28,6 @@ module.exports = [
         collapsable: false,
         children: [
           '/admin-services',
-          '/admin-mysql',
           ['https://support.websoft9.com/docs/linux/admin-practices.html','Linux'],
         ]
       },

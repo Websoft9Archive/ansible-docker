@@ -5,56 +5,58 @@ If you have completed the Docker deployment on Cloud Platform, the following ste
 ## Preparation
 
 1. Get the **Internet IP** on your Cloud Platform
-2. Check you **[Inbound of Security Group Rule](https://support.websoft9.com/docs/faq/tech-instance.html)** of Cloud Console to ensure the TCP:80 is allowed
-3. Make a domain resolution on your DNS Console if you want to use domain for Docker
+2. Check you **[Inbound of Security Group Rule](https://support.websoft9.com/docs/faq/tech-instance.html)** of Cloud Console to ensure the TCP:9000 is allowed if you using the Docker with Portainer
 
 ## Docker Installation Wizard
 
-1. Using local Chrome or Firefox to visit the URL *https://domain/zabbix* or *https://Internet IP/zabbix*, start to install your Docker
-  ![](http://libs.websoft9.com/Websoft9/DocsPicture/en/zabbix/mw05.png)
+### Check Docker
 
-   ![install Docker](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installwel-websoft9.png)
+1. Use the **SSH** to connect Server, and run these command below to view the installation informantion and running status
+   ```
+   sudo docker info
+   sudo systemctl status docker
+   ```
+2. You can ge the message from SSH " Active: active (running)... " when Docker is running
 
-   **If you can visit login page directly**, please get the Username and Password from [here](/stack-accounts.html#zabbix)
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-login-websoft9.png)
+### Login Portainer
 
-2. Check the environment for installation
-   ![install Docker](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installcheck-websoft9.png)
+If you use the Docker with Portainer, refer to the following steps for starting Portainer:
 
-3. Configure the database connection([Don't know password?](/stack-accounts.md#mysql)) and go next step
-   ![install Docker](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installdb-websoft9.png)
+1. Using local Chrome or Firefox to visit the URL *http://Internet IP:9000* to visit Portainer
+   ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-login-websoft9.png)
 
-4. Docker Server settings, suggest using default settings
-   ![install Docker](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installserver-websoft9.png)
+2. Set the username and password, then click【Create user】 
 
-5. Pre-Installation summary  
-   ![install Docker](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installsy-websoft9.png)
+3. Select the【Local】 for default connection, then click 【Connect】
+   ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-loginconnect-websoft9.png)
 
-6. Installation successful    
-   ![install Docker](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-installss-websoft9.png)
+4. Go the the dashboard of Portainer, click the 【Local】 to start
+   ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-bkselect-websoft9.png)
 
-7. Login to Docker console([default username and password](/stack-accounts.md#zabbix))
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-login-websoft9.png)
+5. Click the 【Portainer】 
+   ![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-pcontainer-websoft9.png)
 
-8. Docker dashboard
-   ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-dashboard-websoft9.png)
-
-9. Go to the User profile of Docker Administrator, change your language(if your lanuage is gray, refer to [here](/solution-more.md#zabbix-language) to set it)
-   ![Docker change language](https://libs.websoft9.com/Websoft9/DocsPicture/en/zabbix/zabbix-changelang-websoft9.png)
-   ![Docker change language](https://libs.websoft9.com/Websoft9/DocsPicture/zh/zabbix/zabbix-dashboardzh-websoft9.png)
-
-> More useful Docker guide, please refer to [Docker Documentation](https://www.zabbix.com/documentation/current)
+> More useful Docker guide, please refer to [Docker Documentation](https://docs.docker.com/)
 
 ## Q&A
 
-#### I can't visit the start page of Docker?
+#### I can't visit the start page of Portainer?
 
-Your TCP:80 of Security Group Rules is not allowed so there no response from Chrome or Firefox
+Your TCP:9000 of Security Group Rules is not allowed so there no response from Chrome or Firefox
 
-#### Which database does this Docker package use?
+#### Portainer是如何安装的？
 
-MariaDB
+Portainer 自身也是采用Docker安装
 
-#### Can I use Cloud database for Docker?
+#### 如果我用的部署包中没有Portainer，如何安装它？
 
-No
+可以将服务器当前镜像更换为Portainer镜像，也可以在当前镜像的基础通过命令安装
+
+~~~
+#通过命令安装 Portainer
+
+docker volume create portainer_data
+docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+cd /usr/libexec/docker/
+sudo ln -s docker-runc-current docker-runc
+~~~

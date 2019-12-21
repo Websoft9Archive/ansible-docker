@@ -4,22 +4,18 @@ We collect the most common troubleshooting of using Docker for your reference:
 
 > Many troubleshooting is closely related to the Server, if you can confirm troubleshooting is related to Cloud Platform, please refer to [Cloud Platform Documentation](https://support.websoft9.com/docs/faq/tech-instance.html)
 
-#### Database service could not be started?
+#### 容器无法启动？
 
-Insufficient disk space, insufficient memory, and configuration file errors can make database service could not be started  
+最常见的原因是用户没有按照该容器的要求，设置必须的环境变量，导致容器启动失败
 
-It is recommended to first check through the command.
+#### 容器端口映射失败？
 
-```shell
-# restart mysql service
-systemctl restart mysql
+如果用户无法把握宿主机（服务器）操作系统端口与容器端口的映射关系、可用性情况，请开启端口自动映射
 
-# view disk space
-df -lh
+#### MySQL 容器无法远程访问？
 
-# view memory rate
-free -lh
-```
+导致这个问题的可能原因有三点：
 
-#### Apache httpd service restart error
-Please make sure the vhost.conf is correct for you, and you can track and analyze log files
+1. 端口映射设置错误，导致容器没有网络
+2. 容器没有开启远程访问权限
+3. MySQL 8.0 特殊设置要求

@@ -49,7 +49,7 @@ Manual backup for application is based on the **Exporting source code and databa
 ```
 The general manual backup operation steps are as follows:
 
-1. Compress and download the entire */etc/zabbix* directory by SFTP 
-2. Export Docker's database
+1. Compress and download the entire *Volume* directory by SFTP 
+2. Export application's database if need
 3. Put the source code file, data file and database file in the same folder, named according to the date
 4. Backup completed

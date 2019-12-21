@@ -8,30 +8,13 @@ The Docker deployment package contains a sequence software (referred to as "comp
 
 ### Docker
 
-Docker installation directory: */usr/share/zabbix*  
-Docker configuration file: */usr/share/zabbix/conf/zabbix.conf.php*    
-Docker-Agent logs file：*/var/log/zabbix/zabbix_agentd.log*     
-Docker-Server logs file：*/var/log/zabbix/zabbix_server.log*  
+Docker root directory: */var/lib/docker*  
+Docker image directory: */var/lib/docker/image*   
+Docker daemon.json: please create it when you need and save to to the directory */etc/docker*   
 
-> Docker configuration file includes the database connection information
+### Portainer
 
-### PHP
-
-PHP configuration file: */etc/php/7.2/apache2/php.ini*  
-PHP Modules configurations directory: */etc/php/7.2/mods-available*
-
-### Apache
-
-Apache vhost configuration file：*/etc/apache2/sites-available/000-default.conf*  
-Apache main configuration file：*/etc/apache2/apache2.conf*  
-Apache logs file：*/var/log/apache2*  
-Apache Apache module configuration directory： */etc/apache2/mods-available*
-
-### MariaDB
-
-MySQL installation directory: */usr/local/mysql*  
-MySQL data directory: */var/lib/mysql*  
-MySQL configuration file: */etc/mysql/mariadb.conf.d/50-server.cnf*    
+Portainer Volume: */var/lib/docker/volumes/portainer_data/_data*    
 
 ## Ports
 
@@ -41,9 +24,7 @@ These ports should be opened for this application:
 
 | Name | Number | Use |  Necessity |
 | --- | --- | --- | --- |
-| MariaDB | 3306 | Remote connect MariaDB | Optional |
-| HTTP | 80 | HTTP requests for Docker | Required |
-| HTTPS | 443 | HTTPS requests Docker | Optional |
+| Portainer | 9000 | Remote connect Portainer | Optional |
 
 ## Version
 
@@ -53,21 +34,6 @@ You can see the version from product page of Marketplace. However, after being d
 # Linux Version
 lsb_release -a
 
-# PHP Version
-php -v
-
-# List Installed PHP Modules
-php -m
-
-# Apache version on Ubuntu
-apache2 -v
-
-# Apache version on Centos
-httpd -v
-
-# List Installed Apache Modules
-apachectl -M
-
-# MySQL version:
-mysql -V
+# Docker Version
+docker -v
 ```

@@ -1,68 +1,34 @@
 # FAQ
 
-#### Docker support multi-language?
+#### 单台服务器上是否可以跑多个容器？
 
-Yes
+只要服务器资源允许，单台服务器上可以运行成百上千个容器
 
-#### What is the default character set?
+#### 什么是Docker的C/S模式？
 
-UTF-8
+Docker安装后，在宿主机（服务器）端会运行一个 Docker Daemon 守护进程，同时也安装一个Docker客户端与这个守护进程通信。但客户端与守护进程是分离的，即可以在任何地方运行客户端，然后通过远程与守护进程通信。
+![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/docker-cs-websoft9.png)
 
-#### Is Docker-Proxy included in this deployment solution?
+#### 是否可以通过SSH连接容器？
 
-No, Docker proxy is a process that may collect monitoring data from one or more monitored devices and send the information to the Docker server, deploying a proxy is optional, but may be very beneficial to distribute the load of a single Docker server. If only proxies collect data, processing on the server becomes less CPU and disk I/O hungry.
+在Container上的 console 控制台可以很方便的使用命令操作
+![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-console-websoft9.png)
 
-#### What's Docker-Sender?
+#### 一个容器中可以运行多个应用吗？
 
-Docker sender is a command line utility that may be used to send performance data to Docker server for processing.
+可以。但是从微服务架构角度看，建议一个容器运行单个应用或单个进程
 
-#### What's Docker-Git?
+#### 容器中的服务是否可以被互联网访问？
 
-Docker get is a command line utility which can be used to communicate with Docker agent and retrieve required information from the agent.
+通过与宿主机（服务器）进行端口映射，实现被互联网用户访问
 
+#### 是否有可视化的 Docker 管理工具？
 
-#### Can I use the RDS of Cloud Provider for Docker?
+有，推荐使用 Portainer
 
-No
+#### 是否可以修改 Docker 根目录？
 
-#### Where is the database connection configuration of Docker?
-
-Database configuration information in *LocalSettings.php* in the [Docker installation directory](/stack-components.md#zabbix)
-
-#### If there is no domain name, can I deploy Docker?
-
-Yes, visit Docker by *http://Internet IP*
-
-#### What is the password for the database root user?
-
-The password is stored in the server related file: `/credentials/password.txt`
-
-
-#### Is it possible to modify the source path of Docker?
-
-No
-
-#### Can I configure this Docker if I don't understand the Linux command?
-
-Yes, you can use GUI tool WinSCP to start Docker, no commands
-
-#### How to change the permissions of filesytem?
-
-Change owner(group) or permissions like below:
-
-```shell
-
-#e.g. user is apache
-chown -R apache.apache /data/wwwroot
-
-#e.g. user is nginx
-chown -R nginx.nginx /data/wwwroot
-
-#modify the read/modify/excuse permissions
-
-find /data/wwwroot -type d -exec chmod 750 {} \;
-find /data/wwwroot -type f -exec chmod 640 {} \;
-```
+可以，但不建议修改
 
 #### What's the difference between Deployment and Installation?
 
