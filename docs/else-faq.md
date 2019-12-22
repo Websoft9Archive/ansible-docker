@@ -1,34 +1,34 @@
 # FAQ
 
-#### 单台服务器上是否可以跑多个容器？
+#### Can I run many containers in one Server?
 
-只要服务器资源允许，单台服务器上可以运行成百上千个容器
+Yes, you can run more than hundreds of containers if the Server have enough computing resources
 
-#### 什么是Docker的C/S模式？
+#### What is the C/S model of Docker?
 
-Docker安装后，在宿主机（服务器）端会运行一个 Docker Daemon 守护进程，同时也安装一个Docker客户端与这个守护进程通信。但客户端与守护进程是分离的，即可以在任何地方运行客户端，然后通过远程与守护进程通信。
+After the installation of Docker, Host Machine(Sever) will run  Docker Daemon process, and one Docker client communicate with this process. But this client is detached from the Docker Daemon process which we call it Docker Server. You can use any Docker client to communicate with the Docker Server from different machine.
 ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/docker-cs-websoft9.png)
 
-#### 是否可以通过SSH连接容器？
+#### Can I use the SSH to connect and running command from the Container?
 
-在Container上的 console 控制台可以很方便的使用命令操作
+Yes, you can use command if you have enable the SSH connection of Container
 ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-console-websoft9.png)
 
-#### 一个容器中可以运行多个应用吗？
+#### Can I run many services in one Container?
 
-可以。但是从微服务架构角度看，建议一个容器运行单个应用或单个进程
+Yes, but we suggest you just run one service in one Container for the serverless infrastructure
 
-#### 容器中的服务是否可以被互联网访问？
+#### Can use visit my application of Docker from Internet?
 
-通过与宿主机（服务器）进行端口映射，实现被互联网用户访问
+If you have completed the port mapping for Server with Docker, use can visit from Internet
 
-#### 是否有可视化的 Docker 管理工具？
+#### If there have Docker GUI tools?
 
-有，推荐使用 Portainer
+Yes, we suggest you use Portainer which is very popular
 
-#### 是否可以修改 Docker 根目录？
+#### Can I modify the root directory of Docker?
 
-可以，但不建议修改
+Yes, but we don't recommend to modify it
 
 #### What's the difference between Deployment and Installation?
 
