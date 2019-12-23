@@ -11,7 +11,7 @@
 
 ## 组件
 
-包含的核心组件为：Docker（中英文可选）, LAMP/LNMP等
+包含的核心组件为：Docker
 
 更多请见[参数表](/docs/zh/stack-components.md)
 
