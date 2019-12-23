@@ -64,7 +64,6 @@ sudo ln -s docker-runc-current docker-runc
    * Name 为自定义的容器名称
    * Image 为容器镜像名称，例如"wordpress" 系统会自动到[DockerHub](https://hub.docker.com/)中拉取WordPress
    * Network ports configuration：建议开启【Publish all exposed network ports...】 以保证容器中的服务可以自动匹配服务器端口被外界访问。如果不开启，需手工建立准确的映射关系(**难度系数有点高**)。
-   * Env 环境变量设置：添加如所示的容器环境变量，对于MySQL镜像来说，数据库 root 密码**MySQL_ROOT_PASSWORD** 为必填变量，其他更多可选变量查看 [ MySQL镜像说明](https://hub.docker.com/_/mysql)
    * Restart policy：建议选择【Always】，使得容器无论在什么情况下停止总会自动重新启动；
 
 3. 点击 Deploy the container 创建容器，创建成功后查看映射的服务器端口号；

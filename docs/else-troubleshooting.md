@@ -4,18 +4,18 @@ We collect the most common troubleshooting of using Docker for your reference:
 
 > Many troubleshooting is closely related to the Server, if you can confirm troubleshooting is related to Cloud Platform, please refer to [Cloud Platform Documentation](https://support.websoft9.com/docs/faq/tech-instance.html)
 
-#### 容器无法启动？
+#### The container fails to start?
 
-最常见的原因是用户没有按照该容器的要求，设置必须的环境变量，导致容器启动失败
+The most common reason is that the user did not set the required environment variables according to the requirements of the container, causing the container to fail to start
 
-#### 容器端口映射失败？
+#### Container port mapping failed?
 
-如果用户无法把握宿主机（服务器）操作系统端口与容器端口的映射关系、可用性情况，请开启端口自动映射
+If the user is unable to grasp the mapping relationship and availability between the host (server) operating system port and the container port, please enable automatic port mapping
 
 #### MySQL 容器无法远程访问？
 
-导致这个问题的可能原因有三点：
+There are three possible reasons for this problem:
 
-1. 端口映射设置错误，导致容器没有网络
-2. 容器没有开启远程访问权限
-3. MySQL 8.0 特殊设置要求
+1. The port mapping is set incorrectly, causing the container to have no network
+2. The container does not have remote access
+3. Special requirements for MySQL 8.0

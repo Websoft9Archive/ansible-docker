@@ -44,16 +44,16 @@ If you use the Docker with Portainer, refer to the following steps for starting 
 
 Your TCP:9000 of Security Group Rules is not allowed so there no response from Chrome or Firefox
 
-#### Portainer是如何安装的？
+#### How is Portainer installed?
 
-Portainer 自身也是采用Docker安装
+Portainer was installed by Docker
 
-#### 如果我用的部署包中没有Portainer，如何安装它？
+#### How can I install Portainer if it not been included in my Docker?
 
-可以将服务器当前镜像更换为Portainer镜像，也可以在当前镜像的基础通过命令安装
+You can deploy **Docker with Portainer image**, and you can run these install commands below also:
 
 ~~~
-#通过命令安装 Portainer
+#Commands for installing Portainer
 
 docker volume create portainer_data
 docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
