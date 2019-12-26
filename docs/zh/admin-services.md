@@ -10,3 +10,19 @@ sudo systemctl restart docker
 sudo systemctl stop docker
 sudo systemctl status docker
 ```
+
+### 容器
+
+### 容器暂停/终止
+
+> 终止命令 `stop` 会从进程中释放容器的资源，但不会删除容器
+
+```shell
+#示例：mysql
+sudo docker pause mysql
+sudo docker stop mysql
+
+#示例：redis
+sudo docker pause redis
+sudo docker stop redis
+```
