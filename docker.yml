@@ -34,6 +34,14 @@
     docker_applications:
       - {{apps_select[apps_selection]}}
 
+  pre_tasks:
+
+    - debug:
+        msg: your application is {{docker_applications}} 
+    #when not install application, docker_applications should be set to '', otherwise role_docker error
+    - set_fact:
+        docker_applications: ''
+      when: not apps_select[apps_selection] 
 
   roles:
     - { role: role_common, tags: "role_common" }
