@@ -6,8 +6,14 @@
 
 ## 配置要求
 
-操作系统：目支持 CentOS, Redhat, Ubuntu, Debian 以上部署此脚本
-硬件配置：最低1核1G，10G系统盘空间，否则无法运行
+安装本项目，确保符合如下的条件：
+
+| 条件       | 详情       | 备注  |
+| ------------ | ------------ | ----- |
+| 操作系统       | CentOS7.x AmazonLinux Ubuntu16.04以上      |   |
+| 公有云| AWS, Azure, 阿里云, 华为云, 腾讯云 | 可选 |
+| 私有云|  KVM, VMware, VirtualBox, OpenStack | 可选 |
+| 服务器配置 | 最低1核1G，安装时所需的带宽不低于10M |  建议采用按量100M带宽 |
 
 ## 组件
 
@@ -17,34 +23,33 @@
 
 ## 本项目安装的是 Docker 最新版吗？
 
-本项目采用官方提供的安装脚本进行安装，官方会在安装脚本中对宝塔的版本进行控制，即每一次安装均可保证为 Docker 官方发布的最新稳定版。
+本项目采用官方源进行安装，即每一次安装均可保证为 Docker 官方发布的最新稳定版。
 
 我们会定期检查安装脚本 URL 地址的准确性，以保证用户可以顺利安装。
 
 ## 安装指南
 
-登录 Linux，运行下面的**命令脚本**即可启动自动化部署，然后耐心等待，直至安装成功。
+以 root 用户登录 Linux，运行下面的**一键自动化安装命令**即可启动自动化部署。若没有 root 用户，请以其他用户登录 Linux 后运行 `sudo su -` 命令提升为 root 权限，然后再运行下面的脚本。
 
 ```
-#非 root 用户登录后，需先提升成为 root 权限
-sudo su -
-
-#自动化安装命令
-wget -N https://raw.githubusercontent.com/Websoft9/linux/master/ansible_script/install.py ; python install.py playb=docker url=https://github.com/Websoft9/ansible-docker.git init=0 ansible=y
-
+wget -N https://raw.githubusercontent.com/Websoft9/linux/master/ansible_script/install.sh ; bash install.sh repository=docker
 ```
 
-注意：  
+脚本后启动，就开始了自动化安装，必要时需要用户做出交互式选择，然后耐心等待直至安装成功。
 
-1. 自动化脚本需服务器上已经安装 Python 2.7 或以上版本方可运行，一般操作系统会自带 Python。如果无法运行，系统会提示用户先安装 Python，再运行自动化安装命令。
-2. 由于自动化安装过程中有大量下载任务，若网络不通（或速度太慢）会引起下载失败，从而导致安装程序终止运行。此时，请重置服务器后再次尝试安装，若仍然无法完成，请使用我们在公有云上发布的 [Docker 镜像](https://apps.websoft9.com/docker) 的部署方式
+**安装中的注意事项：**  
+
+1. 操作不慎或网络发生变化，可能会导致SSH连接被中断，安装就会失败，此时请重新安装
+2. 安装缓慢、停滞不前或无故中断，主要是网络不通（或网速太慢）导致的下载问题，此时请重新安装
+
+多种原因导致无法顺利安装，请使用我们在公有云上发布的 [Docker镜像](https://apps.websoft9.com/docker) 的部署方式
 
 
 ## 文档
 
-文档链接：https://support.websoft9.com/docs/docker
+文档链接：https://support.websoft9.com/docs/docker/zh
 
 ## FAQ
 
-- 命令脚本部署与镜像部署有什么区别？请参考[镜像部署-vs-脚本部署](https://support.websoft9.com/docs/faq/zh/bz-product.html#镜像部署-vs-脚本部署)
+- 命令脚本部署与镜像部署有什么区别？请参考：[镜像部署-vs-脚本部署](https://support.websoft9.com/docs/faq/zh/bz-product.html#镜像部署-vs-脚本部署)
 - 本项目支持在 Ansible Tower 上运行吗？支持

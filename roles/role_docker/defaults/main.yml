@@ -1,0 +1,5 @@
+#global var
+region: "0"
+
+#image name which you want to pull, data format: Lists
+docker_images:
