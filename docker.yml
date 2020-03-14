@@ -5,9 +5,35 @@
   hosts: all
   become: yes
   become_method: sudo
+  gather_facts: True
   
   vars_files:
     - vars/main.yml
+  
+  vars_prompt:
+    - name: 'apps_selection'
+      prompt: "\nDo you want to install application on Docker? [ 1/2/3/4] \n\n
+      0: not install anything\n
+      1: adminMongo - GUI tool for MongoDB\n
+      2: OnlyOffice Document Server - Office view and edit online middleware\n
+      3: phpMyAdmin - GUI tool for MySQL\n
+      4: phpPgAdmin - GUI tool for PostgreSQL\n
+      5: Portainer - GUI tool for Docker\n"
+      private: no
+      default: 0
+
+  vars:
+    apps_select:
+      '0': False
+      '1': 'adminmongo'
+      '2': 'onlyofficedocumentserver'
+      '3': 'phpmyadmin'
+      '4': 'phppgadmin'
+      '5': 'portainer'
+
+    docker_applications:
+      - {{apps_select[apps_selection]}}
+
 
   roles:
     - { role: role_common, tags: "role_common" }
