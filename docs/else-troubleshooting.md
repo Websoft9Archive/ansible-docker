@@ -12,7 +12,7 @@ The most common reason is that the user did not set the required environment var
 
 If the user is unable to grasp the mapping relationship and availability between the host (server) operating system port and the container port, please enable automatic port mapping
 
-#### MySQL 容器无法远程访问？
+#### MySQL can't be connected by remote?
 
 There are three possible reasons for this problem:
 
