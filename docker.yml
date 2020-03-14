@@ -13,7 +13,7 @@
   vars_prompt:
     - name: 'apps_selection'
       prompt: "\nDo you want to install application on Docker? [ 1/2/3/4] \n\n
-      0: Not install anything\n
+      0: Not install any application on Docker\n
       1: adminMongo - GUI tool for MongoDB\n
       2: OnlyOffice Document Server - Office view and edit online middleware\n
       3: phpMyAdmin - GUI tool for MySQL\n
