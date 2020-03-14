@@ -55,12 +55,10 @@
     name: docker
     extra_args:  --ignore-installed
 
-- name: pip requirements II
-  pip:
-    name: docker-compose
-    executable: pip3 
-    extra_args:  --ignore-installed
-  when: ansible_os_family == 'Debian'
+- name: Install Docker Compose
+  shell: |
+    curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    chmod +x /usr/local/bin/docker-compose
 
 - name: Started Docker
   service:
@@ -73,15 +71,15 @@
     name: docker 
     enabled: yes
     state: restarted
-  
-- name: Pull Images
-  docker_image:
-    name: "{{item}}"
-    source: pull
-  with_items: "{{docker_images}}"
-  when: docker_images != none
 
 - name: Check Docker Version
   shell: docker -v
   register: docker_ver
   notify: Docker Version
+
+# Docker application installation
+
+- name: Install Docker applications
+  include_tasks: apps_{{item}}.yml
+  with_items: "{{docker_applications}}"
+  when: docker_applications != none

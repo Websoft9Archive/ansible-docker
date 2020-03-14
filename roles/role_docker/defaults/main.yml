@@ -1,5 +1,11 @@
 #global var
 region: "0"
 
-#image name which you want to pull, data format: Lists
-docker_images:
+#Docker application name which you want to pull, data format: Lists
+
+docker_applications:
+#  - adminmongo
+#  - onlyofficedocumentserver
+#  - phpmyadmin
+#  - phppgadmin
+#  - portainer
