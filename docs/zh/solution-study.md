@@ -84,3 +84,55 @@ docker rm CONTAINER ID          删除容器
 docker kill CONTAINER ID        直接关闭容器
 docker images  # 查询已下载镜像
 ~~~
+
+## 编排
+
+编排就是将多个运行的容器串联起来，最常见的编排工具是 Docker Compose。下面是 OnlyOffice 安装所用的 docker-compose 配置文件：
+
+```
+version: '2'
+services:
+  onlyoffice-communityserver:
+    container_name: onlyoffice-communityserver
+    image: onlyoffice/communityserver:latest
+    environment:
+      - MYSQL_SERVER_HOST="127.0.0.1"
+      - MYSQL_SERVER_PORT="3306"
+      - MYSQL_SERVER_DB_NAME="onlyoffice"
+      - MYSQL_SERVER_USER="onlyoffice"
+      - MYSQL_SERVER_PASS="123456"
+      - DOCUMENT_SERVER_PORT_80_TCP_ADDR=onlyoffice-documentserver
+    stdin_open: true
+    restart: always
+    networks:
+      - onlyoffice
+    volumes:
+      - /data/wwwroot/onlyoffice/CommunityServer/logs:/var/log/onlyoffice
+      - /data/wwwroot/onlyoffice/CommunityServer/data:/var/www/onlyoffice/Data
+      - /data/wwwroot/onlyoffice/CommunityServer/DocumentServer/data:/var/www/onlyoffice/DocumentServerData
+    ports:
+      - '80:80'
+      - '443:443'
+      - '5222:5222'
+       
+  onlyoffice-documentserver:
+    container_name: onlyoffice-documentserver
+    image: onlyoffice/documentserver:latest
+    stdin_open: true
+    restart: always
+    networks:
+      - onlyoffice
+    ports:
+      - '9002:80'
+      - '9003:443'
+    volumes:
+      - /data/wwwroot/onlyoffice/DocumentServer/logs:/var/log/onlyoffice
+      - /data/wwwroot/onlyoffice/DocumentServer/data:/var/www/onlyoffice/Data
+
+networks:
+  onlyoffice:
+    driver: 'bridge'
+```
+注意：
+1. volumes 设置中的前面部分是宿主机的目录，后面是容器的目录，宿主机的目录无需提前创建
+2. 容器可以很方便的连接宿主机创建的数据库，上面的onlyoffice-communityserver中的MySQL连接配置就是宿主机连接范例
