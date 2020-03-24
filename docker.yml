@@ -32,7 +32,7 @@
       '5': 'portainer'
 
     docker_applications:
-      - {{apps_select[apps_selection]}}
+      - "{{apps_select[apps_selection]}}"
 
   pre_tasks:
 
