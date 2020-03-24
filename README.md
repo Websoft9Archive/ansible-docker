@@ -17,7 +17,9 @@
 
 ## 组件
 
-包含的核心组件为：Docker
+包含的核心组件为：Docker, phpMyAdmin/Portainer/pgphpMyadmin/adminmongo on Docker可选  
+
+![](http://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/portainer/portainer-bkselect-websoft9.png)
 
 更多请见[参数表](/docs/zh/stack-components.md)
 
