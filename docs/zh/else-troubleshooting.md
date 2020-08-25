@@ -4,6 +4,12 @@
 
 > 大部分故障与云平台密切相关，如果你可以确认故障的原因是云平台造成的，请参考[云平台文档](https://support.websoft9.com/docs/faq/zh/tech-instance.html)
 
+#### Docker service 无法启动？
+
+先通过 `systemctl status docker` 和 `journalctl -xe` 查看错误日志。
+
+* 如果错误日志是  Unit docker.socket entered failed state，表明系统缺少 docker 用户组，运行 `groupadd docker` 增加用户组
+
 #### 容器无法启动？
 
 最常见的原因是用户没有按照该容器的要求，设置必须的环境变量，导致容器启动失败
