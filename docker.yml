@@ -30,10 +30,10 @@
       '1': 'adminmongo'
       '2': 'adminer'
       '3': 'mongoexpress'
-      '2': 'onlyofficedocumentserver'
-      '3': 'phpmyadmin'
-      '4': 'phppgadmin'
-      '5': 'portainer'
+      '4': 'onlyofficedocumentserver'
+      '5': 'phpmyadmin'
+      '6': 'phppgadmin'
+      '7': 'portainer'
 
     docker_applications:
       - "{{apps_select[apps_selection]}}"
