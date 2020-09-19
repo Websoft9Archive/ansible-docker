@@ -15,10 +15,12 @@
       prompt: "\nDo you want to install application on Docker? [ 1/2/3/4] \n\n
       0: Not install any application on Docker\n
       1: adminMongo - GUI tool for MongoDB\n
-      2: OnlyOffice Document Server - Office view and edit online middleware\n
-      3: phpMyAdmin - GUI tool for MySQL\n
-      4: phpPgAdmin - GUI tool for PostgreSQL\n
-      5: Portainer - GUI tool for Docker\n"
+      2: Adminer - GUI tools for major DB\n
+      3: Mongo-Express - GUI tool for MongoDB\n
+      4: OnlyOffice Document Server - Office view and edit online middleware\n
+      5: phpMyAdmin - GUI tool for MySQL\n
+      6: phpPgAdmin - GUI tool for PostgreSQL\n
+      7: Portainer - GUI tool for Docker\n"
       private: no
       default: 0
 
@@ -26,6 +28,8 @@
     apps_select:
       '0': False
       '1': 'adminmongo'
+      '2': 'adminer'
+      '3': 'mongoexpress'
       '2': 'onlyofficedocumentserver'
       '3': 'phpmyadmin'
       '4': 'phppgadmin'
