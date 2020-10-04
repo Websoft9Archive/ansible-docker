@@ -16,11 +16,13 @@
       0: Not install any application on Docker\n
       1: adminMongo - GUI tool for MongoDB\n
       2: Adminer - GUI tools for major DB\n
-      3: Mongo-Express - GUI tool for MongoDB\n
-      4: OnlyOffice Document Server - Office view and edit online middleware\n
-      5: phpMyAdmin - GUI tool for MySQL\n
-      6: phpPgAdmin - GUI tool for PostgreSQL\n
-      7: Portainer - GUI tool for Docker\n"
+      3: Codiad - a web-based IDE framework\n
+      4: Code-Server - VS Code in browser\n
+      5: Mongo-Express - GUI tool for MongoDB\n
+      6: OnlyOffice Document Server - Office view and edit online middleware\n
+      7: phpMyAdmin - GUI tool for MySQL\n
+      8: phpPgAdmin - GUI tool for PostgreSQL\n
+      9: Portainer - GUI tool for Docker\n"
       private: no
       default: 0
 
@@ -29,11 +31,13 @@
       '0': False
       '1': 'adminmongo'
       '2': 'adminer'
-      '3': 'mongoexpress'
-      '4': 'onlyofficedocumentserver'
-      '5': 'phpmyadmin'
-      '6': 'phppgadmin'
-      '7': 'portainer'
+      '3': 'codiad'
+      '4': 'codeserver'
+      '5': 'mongoexpress'
+      '6': 'onlyofficedocumentserver'
+      '7': 'phpmyadmin'
+      '8': 'phppgadmin'
+      '9': 'portainer'
 
     docker_applications:
       - "{{apps_select[apps_selection]}}"
