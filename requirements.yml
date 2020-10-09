@@ -1,14 +1,9 @@
 - src: https://github.com/websoft9dev/role_common
-  version: master
 
 - src: https://github.com/websoft9dev/role_cloud
-  version: master
 
 - src: https://github.com/websoft9dev/role_docker
-  version: master
 
 - src: https://github.com/websoft9dev/role_preend
-  version: master
 
 - src: https://github.com/websoft9dev/role_end
-  version: master
