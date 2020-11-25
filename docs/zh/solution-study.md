@@ -91,7 +91,10 @@ docker ps                       查看正在运行的容器列表（可以看到
 docker ps -a                    查看所有的容器（不管是否运行都能看到）
 docker start/stop CONTAINER ID  开始/停止容器（CONTAINER ID 是容器的ID）            
 docker rm CONTAINER ID          删除容器
+docker stop $(docker ps -aq)    停止所有容器
+docker rm $(docker ps -aq)      删除所有容器
 docker kill CONTAINER ID        直接关闭容器
+docker rmi $(docker images -q) -f 删除所有镜像
 docker images  # 查询已下载镜像
 ~~~
 
