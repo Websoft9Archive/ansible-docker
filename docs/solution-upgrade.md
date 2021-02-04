@@ -26,6 +26,8 @@ yum update -y
 
 ## Docker Upgrade
 
+### Upgrade by docker command
+
 It is very easy for upgrading Docker:
 
 ``` shell
@@ -36,4 +38,14 @@ sudo apt-get install docker-engine
 #For Centos&Redhat
 sudo yum update
 sudo yum install docker-engine
+```
+
+### Upgrade by docker-compose command
+
+If you use the Docker-Compose for running the Docker container, just need three commands to upgrade container:
+
+```
+docker-compose down -v
+docker-compose pull
+docker-compose up -d
 ```

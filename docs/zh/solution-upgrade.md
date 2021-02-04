@@ -28,16 +28,31 @@ yum update -y
 
 ## 容器升级
 
-以正在运行的MySQL容器为例，如果没有持久化卷，容器的升级步骤：
+### Docker 命令升级
+
+以正在运行的 MySQL 容器为例，如果没有持久化卷，容器的升级步骤：
 
 ```
 #更新镜像
 docker pull mysql
+
 #停止容器
 docker stop my-mysql-container
+
 #删除容器
 docker rm my-mysql-container
+
 #重载容器
 docker run --name=my-mysql-container --restart=always \
   -e MYSQL_ROOT_PASSWORD=mypwd -v /my/data/dir:/var/lib/mysql -d mysql
+```
+
+### Docker-Compose 命令升级
+
+如果使用的是 Docker-Compose 启动的容器，升级容器只需运行如下三条命令：
+
+```
+docker-compose down -v
+docker-compose pull
+docker-compose up -d
 ```

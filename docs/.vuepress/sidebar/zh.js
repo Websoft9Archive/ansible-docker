@@ -18,6 +18,7 @@ module.exports = [
     children: [
       '/zh/solution-study',
       '/zh/solution-portainer',
+      '/zh/solution-apps',
       '/zh/solution-backup',
       '/zh/solution-upgrade',
       '/zh/solution-more',
