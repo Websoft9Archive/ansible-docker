@@ -17,8 +17,8 @@ module.exports = [
     collapsable: false,
     children: [
       '/zh/solution-study',
+      '/zh/solution-compose',
       '/zh/solution-portainer',
-      '/zh/solution-apps',
       '/zh/solution-backup',
       '/zh/solution-upgrade',
       '/zh/solution-more',
