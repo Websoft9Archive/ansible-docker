@@ -152,6 +152,116 @@ docker load image
 
 ### 运行容器
 
+通过 docker run 命令运行容器，它的用法和参数如下（[详情](https://github.com/docker/cli/blob/master/docs/reference/run.md)）。
+
+```
+Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+
+Run a command in a new container
+
+Options:
+      --add-host list                  Add a custom host-to-IP mapping (host:ip)
+  -a, --attach list                    Attach to STDIN, STDOUT or STDERR
+      --blkio-weight uint16            Block IO (relative weight), between 10 and 1000, or 0 to disable (default 0)
+      --blkio-weight-device list       Block IO weight (relative device weight) (default [])
+      --cap-add list                   Add Linux capabilities
+      --cap-drop list                  Drop Linux capabilities
+      --cgroup-parent string           Optional parent cgroup for the container
+      --cgroupns string                Cgroup namespace to use (host|private)
+                                       'host':    Run the container in the Docker host's cgroup namespace
+                                       'private': Run the container in its own private cgroup namespace
+                                       '':        Use the cgroup namespace as configured by the
+                                                  default-cgroupns-mode option on the daemon (default)
+      --cidfile string                 Write the container ID to the file
+      --cpu-period int                 Limit CPU CFS (Completely Fair Scheduler) period
+      --cpu-quota int                  Limit CPU CFS (Completely Fair Scheduler) quota
+      --cpu-rt-period int              Limit CPU real-time period in microseconds
+      --cpu-rt-runtime int             Limit CPU real-time runtime in microseconds
+  -c, --cpu-shares int                 CPU shares (relative weight)
+      --cpus decimal                   Number of CPUs
+      --cpuset-cpus string             CPUs in which to allow execution (0-3, 0,1)
+      --cpuset-mems string             MEMs in which to allow execution (0-3, 0,1)
+  -d, --detach                         Run container in background and print container ID
+      --detach-keys string             Override the key sequence for detaching a container
+      --device list                    Add a host device to the container
+      --device-cgroup-rule list        Add a rule to the cgroup allowed devices list
+      --device-read-bps list           Limit read rate (bytes per second) from a device (default [])
+      --device-read-iops list          Limit read rate (IO per second) from a device (default [])
+      --device-write-bps list          Limit write rate (bytes per second) to a device (default [])
+      --device-write-iops list         Limit write rate (IO per second) to a device (default [])
+      --disable-content-trust          Skip image verification (default true)
+      --dns list                       Set custom DNS servers
+      --dns-option list                Set DNS options
+      --dns-search list                Set custom DNS search domains
+      --domainname string              Container NIS domain name
+      --entrypoint string              Overwrite the default ENTRYPOINT of the image
+  -e, --env list                       Set environment variables
+      --env-file list                  Read in a file of environment variables
+      --expose list                    Expose a port or a range of ports
+      --gpus gpu-request               GPU devices to add to the container ('all' to pass all GPUs)
+      --group-add list                 Add additional groups to join
+      --health-cmd string              Command to run to check health
+      --health-interval duration       Time between running the check (ms|s|m|h) (default 0s)
+      --health-retries int             Consecutive failures needed to report unhealthy
+      --health-start-period duration   Start period for the container to initialize before starting health-retries countdown (ms|s|m|h) (default 0s)
+      --health-timeout duration        Maximum time to allow one check to run (ms|s|m|h) (default 0s)
+      --help                           Print usage
+  -h, --hostname string                Container host name
+      --init                           Run an init inside the container that forwards signals and reaps processes
+  -i, --interactive                    Keep STDIN open even if not attached
+      --ip string                      IPv4 address (e.g., 172.30.100.104)
+      --ip6 string                     IPv6 address (e.g., 2001:db8::33)
+      --ipc string                     IPC mode to use
+      --isolation string               Container isolation technology
+      --kernel-memory bytes            Kernel memory limit
+  -l, --label list                     Set meta data on a container
+      --label-file list                Read in a line delimited file of labels
+      --link list                      Add link to another container
+      --link-local-ip list             Container IPv4/IPv6 link-local addresses
+      --log-driver string              Logging driver for the container
+      --log-opt list                   Log driver options
+      --mac-address string             Container MAC address (e.g., 92:d0:c6:0a:29:33)
+  -m, --memory bytes                   Memory limit
+      --memory-reservation bytes       Memory soft limit
+      --memory-swap bytes              Swap limit equal to memory plus swap: '-1' to enable unlimited swap
+      --memory-swappiness int          Tune container memory swappiness (0 to 100) (default -1)
+      --mount mount                    Attach a filesystem mount to the container
+      --name string                    Assign a name to the container
+      --network network                Connect a container to a network
+      --network-alias list             Add network-scoped alias for the container
+      --no-healthcheck                 Disable any container-specified HEALTHCHECK
+      --oom-kill-disable               Disable OOM Killer
+      --oom-score-adj int              Tune host's OOM preferences (-1000 to 1000)
+      --pid string                     PID namespace to use
+      --pids-limit int                 Tune container pids limit (set -1 for unlimited)
+      --platform string                Set platform if server is multi-platform capable
+      --privileged                     Give extended privileges to this container
+  -p, --publish list                   Publish a container's port(s) to the host
+  -P, --publish-all                    Publish all exposed ports to random ports
+      --pull string                    Pull image before running ("always"|"missing"|"never") (default "missing")
+      --read-only                      Mount the container's root filesystem as read only
+      --restart string                 Restart policy to apply when a container exits (default "no")
+      --rm                             Automatically remove the container when it exits
+      --runtime string                 Runtime to use for this container
+      --security-opt list              Security Options
+      --shm-size bytes                 Size of /dev/shm
+      --sig-proxy                      Proxy received signals to the process (default true)
+      --stop-signal string             Signal to stop a container (default "SIGTERM")
+      --stop-timeout int               Timeout (in seconds) to stop a container
+      --storage-opt list               Storage driver options for the container
+      --sysctl map                     Sysctl options (default map[])
+      --tmpfs list                     Mount a tmpfs directory
+  -t, --tty                            Allocate a pseudo-TTY
+      --ulimit ulimit                  Ulimit options (default [])
+  -u, --user string                    Username or UID (format: <name|uid>[:<group|gid>])
+      --userns string                  User namespace to use
+      --uts string                     UTS namespace to use
+  -v, --volume list                    Bind mount a volume
+      --volume-driver string           Optional volume driver for the container
+      --volumes-from list              Mount volumes from the specified container(s)
+  -w, --workdir string                 Working directory inside the container
+```
+
 下面我们通过一个简单的示例，介绍如何运行一个容器：
 
 1. 找到一个 Docker 镜像，例如：[MySQL](https://hub.docker.com/_/mysql)
@@ -211,7 +321,9 @@ Docker 的原理表明，容器的内核有一部分共享的 Docker 镜像的�
 
 ## Dockerfile
 
-Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的指令和说明。  
+Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一条条构建镜像所需的[指令](https://github.com/docker/cli/blob/master/docs/reference/builder.md)和说明。  
+
+> 理解每个指令的用法是掌握 Docker 技术的关键
 
 具体使用请直接阅读[官方文档](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/)。
 
@@ -221,6 +333,75 @@ Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一
 * Dockerfile 文件主要用于编写应用的安装过程
 * 应用的初始化过程可以在 Dockerfile 中引入，然后在独立的脚本中编写
 * Dockerfile 必须构建成镜像后再供用户使用，直接基于 Dockerfile 运行容器可能会由于网络问题导致无法达成预期目的
+
+指令不仅仅用于设计 Docker 镜像，还有一部分指令与容器运行时密切相关，包括：
+
+* CMD
+* ENTRYPOINT
+* WORKDIR
+* ENV
+* USER
+* VOLUME
+
+
+### CMD 和 ENTRYPOINT
+
+它们都是容器启动时运行的指令。
+
+有如下几个关键技术点需要掌握：  
+
+1. CMD 与 ENTRYPOINT 的区别：CMD 直接运行单条命令，ENTRYPOINT 用于运行一个脚本
+2. 指令的 Shell 和 Exec 语法模式
+
+  ```
+  # Shell 模式
+  CMD ping localhost
+
+  # Exec 模式
+  CMD ["/bin/ping","localhost"] 
+  ```
+
+  可见它们从写法上一种是命令行模式，一种是数组模式。  
+
+  但它们不仅仅写法上不同，更重要的是运行方式不同。  
+  
+  * CMD 模式相当于调用 Shell 后再运行指令，例如上面的例子实际上相当于： /bin/sh -c "ping localhost"
+  * ENTRYPOINT 模式相当于直接运行指令，例如上面的例子实际上相当于： /bin/ping localhost
+
+3. CMD 与 ENTRYPOINT 组合使用：组合使用的时候 CMD 作为 ENTRYPOINT 的一个参数
+
+组合使用 ENTRYPOINT 和 CMD 命令式, 确保你一定用的是 Exec 表示法. 如果用其中一个用的是Shell表示法, 或者一个是Shell表示法, 另一个是Exec表示法, 你永远得不到你预期的效果.
+
+下表列出了如果把Shell表示法和Exec表示法混合, 最终得到的命令行, 可以看到如果有Shell表示法存在, 很难得到正确的效果:
+
+  ```
+  Dockerfile    Command
+
+  ENTRYPOINT /bin/ping -c 3
+  CMD localhost               /bin/sh -c '/bin/ping -c 3' /bin/sh -c localhost
+
+
+  ENTRYPOINT ["/bin/ping","-c","3"]
+  CMD localhost               /bin/ping -c 3 /bin/sh -c localhost
+
+  ENTRYPOINT /bin/ping -c 3
+  CMD ["localhost"]"          /bin/sh -c '/bin/ping -c 3' localhost
+
+  ENTRYPOINT ["/bin/ping","-c","3"]
+  CMD ["localhost"]            /bin/ping -c 3 localhost
+  ```
+
+从上面看出, 只有ENTRYPOINT 和 CMD 都用 Exec 表示法, 才能得到预期的效果。
+
+
+### WORKDIR
+
+### ENV
+
+### USER
+
+### VOLUME
+
 
 ## 数据卷
 
