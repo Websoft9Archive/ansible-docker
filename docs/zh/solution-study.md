@@ -33,14 +33,14 @@ Docker 是利用 Linux 的虚拟隔离技术（namespace）将操作系统分割
 
 Docker 的出现，正好解决了上述的困扰，轻量化的虚拟机改变了系统架构，云原生诞生于此。
 
-## 核心原理
+## 原理
 
 Docker 的核心原理可以归纳为两点：**虚拟文件系统+虚拟用户**。
 
 什么意思呢？ 
 
 * 虚拟文件系统本质上还是宿主机上的文件，但通过虚拟技术就变成了一种“独占”资源。  
-* 虚拟用户本质山还是宿主机上的用户，但通过虚拟技术让容器认为自己有了单独的用户管理。  
+* 虚拟用户本质上还是宿主机上的用户，但通过虚拟技术让容器认为自己有了单独的用户管理。  
 
 仅有虚拟还不够，在技术上必须有隔离方可确保容器之间互不干扰。  
 
@@ -69,6 +69,8 @@ Docker 是对操作系统资源进行虚拟组合，形成一种新的有边界�
 
 ## 镜像
 
+### 原理
+
 如果只考虑 Docker 容器的操作系统属性，那么镜像=轻量级操作系统安装包。  
 
 如果需考虑 Docker 容器的应用软件属性，那么镜像=（轻量级操作系统+应用）安装包
@@ -80,7 +82,6 @@ Docker 是对操作系统资源进行虚拟组合，形成一种新的有边界�
 用户编写镜像编排 Dockerfile，对这种文件进行 build 操作，就生成了一个镜像。  
 
 ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/dockerfiletoimage.png)
-
 
 #### 镜像是一个文件？
 
@@ -102,17 +103,17 @@ docker load image
 
 如果没有镜像文件，Docker 会尝试从 [Dockerhub 镜像仓库](http://dockerhub.com/)中下载到本地，然后运行。
 
-## 镜像仓库
+### 仓库
 
-众所周知，Dockerhub 是由 Docker 官方运营的全球最大的镜像仓库。  
+众所周知，DockerHub 是由 Docker 官方运营的全球最大的镜像仓库。  
 
-实际上，除了 Dockerhub 之外，还有多种构建仓库的方式：
+实际上，除了 DockerHub 之外，还有多种构建仓库的方式：
 
-### 自建仓库
+#### 自建仓库
 
 支持自建仓库。一般云提供商均提供了镜像仓库服务，供客户存放自己的私有镜像。
 
-### 加速仓库
+#### 加速仓库
 
 如果从 Dockerhub 下载镜像镜像非常慢的话，就需要通过如下的方式修改仓库地址：
 
@@ -143,6 +144,7 @@ docker load image
     sudo systemctl daemon-reload
     sudo systemctl restart docker
     ```
+
 
 ## 容器
 
@@ -400,6 +402,14 @@ Dockerfile 是一个用来构建镜像的文本文件，文本内容包含了一
 
 ### USER
 
+先看官方的定义：  
+
+The USER instruction sets the user name (or UID) and optionally the user group (or GID) to use when running the image and for any RUN, CMD and ENTRYPOINT instructions that follow it in the Dockerfile.
+
+有几个关键信息：  
+
+* 适用于 RUN, CMD and ENTRYPOINT 三个指令
+
 ### VOLUME
 
 
@@ -468,23 +478,142 @@ Docker 提供了一套数据存储的方案（[卷](https://docs.docker.com/stor
 
 问题：Container中的应用为什么有端口号？Container是带最简的操作系统的，有操作系统就一定会通过端口访问程序
 
-## 用户权限
+## 用户
 
-虽然有用户名的概念，但由于 Linux 内核最终管理的用户对象是以 uid 为标识，所以本节均以 uid 来替代用户名。  
+一般来说 Docker 不建议以 root 用户运行容器进程，因此 Dockerfile 的编写者都会在代码中创建普通用户，然后以普通用户运行进程。  
 
-默认情况下，容器中的进程以 root 用户权限运行，并且这个 root 用户和宿主机中的 root 是同一个用户。  
+如果没有创建普通用户，容器就会默认以 root 用户权限运行
+
+> 运行容器的 root 与宿主机的 root 是同一个用户
 
 ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/docker-uidgid-websoft9.png)
+
+### UID
+
+虽然有用户名的概念，但由于 Linux 内核最终管理的用户对象是以 uid 为标识，所以本节均以 uid 来替代用户名。  
 
 容器由于是基于虚拟隔离技术的并共享操作系统内核的独立进程，而内核只管理一套 uid 和 gid，所以容器中的 uid 和 gid 实际上与宿主机内核是一套体系。
 
 > 理解容器中用户权限、uid、gid 等本质，重点在于理解 《Linux User Namespace》
 
-当容器进程尝试写入文件时，内核会检查此容器的 uid 和 gid，以确定其是否具有足够的特权来修改文件。
+当容器进程尝试写文件时，内核会检查此容器的 uid 和 gid，以确定其是否具有足够的特权来修改文件。
+
+### 提权
+
+我们在 Dockerfile 会发现，当需要对用户提权的时候，采用的不是 su，而是下面两个命令的组合
+
+* gosu
+* exec
+
+## 进程
+
+有人说，容器的本质就是进程。不管这句话是否绝对，但可见进程对于容器的重要性不言而喻。  
+
+
+### 查询进程
+
+通过运行 `docker top containerid` 查询进程。  
+
+为了便于理解，我们先运行一个Docker应用：[docker-wordpress](https://github.com/websoft9/docker-wordpress)  
+
+然以后分别查询各个容器的进程。  
+
+```
+
+[root@test ~]# docker top wordpress-mysql
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+polkitd             22107               22080               0                   Aug01               ?                   00:01:52            mysqld
+
+[root@test ~]# docker top wordpress
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+33                  807                 22090               0                   Aug01               ?                   00:00:00            apache2 -DFOREGROUND
+33                  1675                22090               0                   Aug01               ?                   00:00:01            apache2 -DFOREGROUND
+33                  2935                22090               0                   Aug01               ?                   00:00:00            apache2 -DFOREGROUND
+33                  21955               22090               0                   Aug01               ?                   00:00:00            apache2 -DFOREGROUND
+root                22090               22054               0                   Aug01               ?                   00:00:06            apache2 -DFOREGROUND
+33                  26327               22090               0                   Aug01               ?                   00:00:00            apache2 -DFOREGROUND
+33                  28793               22090               0                   Aug01               ?                   00:00:01            apache2 -DFOREGROUND
+33                  30253               22090               0                   Aug01               ?                   00:00:00            apache2 -DFOREGROUND
+33                  31445               22090               0                   Aug01               ?                   00:00:01            apache2 -DFOREGROUND
+33                  31955               22090               0                   Aug01               ?                   00:00:01            apache2 -DFOREGROUND
+33                  32734               22090               0                   Aug01               ?                   00:00:01            apache2 -DFOREGROUND
+```
+
+可见有的容器只运行了一个进程，而有的容器运行了多个进程（Apache 作为HTTP服务器，其天生是多进程设计）。  
+
+也可以进入其中一个容器，再运行 `ps -ef` 命令查看进程：
+
+```
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 Aug01 ?        00:00:06 apache2 -DFOREGROUND
+www-data   153     1  0 Aug01 ?        00:00:01 apache2 -DFOREGROUND
+www-data   181     1  0 Aug01 ?        00:00:00 apache2 -DFOREGROUND
+www-data   193     1  0 Aug01 ?        00:00:01 apache2 -DFOREGROUND
+www-data   209     1  0 Aug01 ?        00:00:01 apache2 -DFOREGROUND
+www-data   214     1  0 Aug01 ?        00:00:01 apache2 -DFOREGROUND
+www-data   215     1  0 Aug01 ?        00:00:00 apache2 -DFOREGROUND
+www-data   218     1  0 Aug01 ?        00:00:01 apache2 -DFOREGROUND
+www-data   219     1  0 Aug01 ?        00:00:00 apache2 -DFOREGROUND
+www-data   224     1  0 Aug01 ?        00:00:00 apache2 -DFOREGROUND
+www-data   225     1  0 Aug01 ?        00:00:00 apache2 -DFOREGROUND
+root       253     0  0 06:17 pts/0    00:00:00 bash
+root       261   253  0 06:18 pts/0    00:00:00 ps -ef
+```
+
+可见，两者的效果是一样的。  
+
+新开一个 Shell 窗口，再运行 `pstree -a` 命令，回看到如下的进程树  
+
+```
+  ├─containerd-shim -namespace moby -id 8a7712fe435afaa79c08e7281de7e1a658cd00261fecc7ba02da1847d47d1715 -address /run/containerd/containerd.sock
+  │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   ├─apache2 -DFOREGROUND
+  │   │   └─apache2 -DFOREGROUND
+  │   ├─bash
+  │   └─12*[{containerd-shim}]
+  ├─containerd-shim -namespace moby -id d287c79eaced1fcdde94b2b6d45781937cb17a0ddf4848d26907dee40602e80f -address /run/containerd/containerd.sock
+  │   ├─mysqld
+  │   │   └─30*[{mysqld}]
+  │   └─13*[{containerd-shim}]
+
+```
+
+你会发现，这个查询结果也基本类同。  
+
+
+### 创建进程
+
+通过上面的说明，我们已经有了非常具体的进程印象，那么现在我们再深入一些：容器的进程是如何创建的呢？
+
+我们先回顾 Dockerfile 中的 CMD 和 ENTRYPOINT，其他它就是容器的运行时，镜像提供了容器运行所需的软件包和软件环境，但如果不通过 CMD 和 ENTRYPOINT 来启动各种应用，容器就不会产生进程。
+
+### 非服务进程
+
+容器一般的用于承载服务，但在开发中，容器镜像也可以用作短暂的进程：在我们计算机上运行的、容器化的可执行命令。这些容器执行单一的任务，生命周期短暂，而且通常可以在使用后被删除。我们称之为可执行镜像，这样的镜像创建的容器的进程可以称之为**非服务进程**。  
+
+### 主进程
+
+在Docker中有一个很特殊的进程（PID=1 的进程），这也是Docker的主进程，通过 Dockerfile 中的 ENTRYPOINT 和/或 CMD指令指定。当主进程退出的时候，容器所拥有的 PIG 命名空间就会被销毁，容器的生命周期也会结束 Docker 最佳实践建议的是一个 container 一个 service，并不强制要你一个container一个线程。有的服务，会催生更多的子进程，比如 Apache 和 uwsgi，这是完全可以的。  
+
+PID1进程需要对自己创建的子进程负责，当主进程没有设计好，不能优雅地让子进程退出，就会照成很多问题，比如数据库 container，如果处理数据的进程没有优雅地退出，可能会照成数据丢失。如果很不幸，你的主进程就是这种管理不了子进程的那种，Docker 提供了一个小工具，帮助你来完成这部分内容。你只需要在 run 创建 container 的时候提供一个 —init flag 就行，Docker 就会手动为你处理好这些问题。  
+
+Docker 的主进程由于是一个很特殊的存在，它的生命周期就是 docker container 的生命周期，它得对产生的子进程负责，在写 Dockerfile 的时候，务必明确 PID1 进程是什么。  
 
 ## 编排
 
-编排就是将多个运行的容器串联起来，最常见的编排工具是 Docker Compose。下面是 OnlyOffice 安装所用的 docker-compose 配置文件：
+编排就是将多个运行的容器串联起来，最常见的编排工具是 Docker Compose。  
+
+### 范例
+
+下面是 OnlyOffice 安装所用的 docker-compose 配置文件：
 
 ```
 version: '2'
@@ -531,8 +660,70 @@ networks:
     driver: 'bridge'
 ```
 注意：
+
 1. volumes 设置中的前面部分是宿主机的目录，后面是容器的目录，宿主机的目录无需提前创建
 2. 容器可以很方便的连接宿主机创建的数据库，上面的onlyoffice-communityserver中的MySQL连接配置就是宿主机连接范例
+
+### 指令用法
+
+下面重点描述重要指令的用法：
+
+#### command
+
+command 指令会覆盖 Dockerfile 中定义的 CMD 变量对应的值。  
+
+例如： command: bundle exec thin -p 3000
+
+除了支持上述单一指令之外，也支持多指令的编写。  
+
+**多指令**
+
+```
+version: '3.1'
+services:
+  db:
+    image: postgres
+  web:
+    build: .
+    command:
+      - /bin/bash
+      - -c
+      - |
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000
+
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    links:
+      - db
+```
+
+以上编排中的 command 相当于 docker run 下的：`command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"`   
+
+如果多指令涉及变量，也可以写成：  
+
+```
+    command:
+      - /bin/bash
+      - -c
+      - |
+        var=$$(echo 'foo')
+        echo $$var # prints foo
+```
+
+#### entrypoint
+
+entrypoint 用法与 command 类似，也支持多命令。  
+
+## 集群
+
+容器技术不仅仅可以运行在单台宿主机上，它也支持运行在多个主机集群上。有两种类型的流行集群工具：
+
+* Docker Swarm：Docker 官方出品的容器的集群和调度工具。借助 Swarm，IT 管理员和开发人员可以将 Docker 节点集群建立和管理为单个虚拟系统。
+* Kubernetes（k8s）：跨主机集群的自动部署、扩展以及运行应用程序容器的开源平台，这些操作包括部署，调度和节点集群间扩展。
+
 
 ## 常见命令
 
