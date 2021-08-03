@@ -484,7 +484,7 @@ Docker 提供了一套数据存储的方案（[卷](https://docs.docker.com/stor
 
 如果没有创建普通用户，容器就会默认以 root 用户权限运行
 
-> 运行容器的 root 与宿主机的 root 是同一个用户
+> 容器的 root 与宿主机的 root 是同一个用户，但容器 root 的权限是有限的，如果加上 --privileged=true，那么它就等同于宿主机 root 权限
 
 ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/docker-uidgid-websoft9.png)
 
