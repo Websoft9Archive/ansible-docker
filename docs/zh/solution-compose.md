@@ -74,7 +74,9 @@ Commands:
   version            Show version information and quit
 ```
 
-## 规范
+## 指令
+
+Docker-compose 文件的编写依赖于丰富的[指令](https://github.com/compose-spec/compose-spec/blob/master/spec.md)，所以理解各个指令的含义是首要的学习目标。  
 
 Docker Compose 文件用于创建互相关联的容器服务，下面是一个典型的 Compose 文件范例。  
 
@@ -101,6 +103,34 @@ Compose 的文件规范请参考官方文档：[The Compose Specification](https
 ### version
 
 version 参数表示使用哪个版本的 compose 语法，一般是向下兼容。  
+
+### volume
+
+volume 指令是很场景的应用变量，最常见的是基于下面的格式创建一个卷
+
+```
+volumes: 
+  graylog
+```
+
+此时，创建的卷存储在 /var/lib/volumes 下。  
+
+如果希望自定义一个卷的路径怎么做？docker-compose 文件中定义如下的 volume，基于它再创建容器：  
+
+```
+volumes: 
+  graylog:
+    driver_opts:
+      type: none
+      device: /data/graylog
+      o: bind
+```
+
+发现非常有趣：
+
+1. 显示 Creating volume "docker-graylog_graylog" with default driver，即在 /var/lib/volumes 下创建了卷
+2. 自定义的 /data/graylog 也产生了数据 
+
 
 ## 常见问题
 
@@ -151,6 +181,25 @@ networks:
   default:
       name: "apps"
 ```
+
+#### 是否可以去掉 Named volume 挂载下的文件夹前缀？
+
+Named volume 挂载的目录名称默认为 {project_name}_dirname。这样做的好处是避免多个同类应用挂载导致冲突。  
+
+如何去掉这个前缀呢？下面是具体的范例：  
+
+1. 先创建一个挂载点
+
+  ```
+  docker volume create --name=graylog
+  ```
+
+2. Docker-compose 文件中 volumes 定义中增加 `external: true` 参数
+  ```
+  volumes: 
+    graylog:
+      external: true
+  ```
 
 #### 不同网络的容器是否可以通过主机名互联？
 

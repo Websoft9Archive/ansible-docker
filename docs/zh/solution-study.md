@@ -432,6 +432,7 @@ Docker 提供了一套数据存储的方案（[卷](https://docs.docker.com/stor
 
 ![](https://libs.websoft9.com/Websoft9/DocsPicture/zh/docker/types-of-mounts-volume.png)
 
+
 主要有两种形式的存储卷模式：
 
 |          | Named Volumes                  | Bind Mounts                   |
@@ -441,24 +442,26 @@ Docker 提供了一套数据存储的方案（[卷](https://docs.docker.com/stor
 | 预先定义 | 可以先定义，也可以不定义       | 不需要                        |
 | 名称     | my-volume_default 或 my-volume | data                          |
 | 文件权限 | 权限宽松                       | 受制于宿主机文件权限          |
-| 数据方向 | 容器 →Volume                   | Volume  → 容器                |
+| 空目录下数据方向 | 容器 → Named Volume                   | Bind Volume  → 容器                |
+| 非空目录下数据方向 | Named Volume  → 容器                   | Bind Volume  → 容器                |
 
 
 我们根据持久化数据挂载的几种场景进行试验，得出如下的现象：  
 
-
-|  | 容器普通目录 | 容器挂载点目录 |
-| ------------- | ------------------------ | ------------------------ |
-| 空Bind | 容器目录被遮挡 | 容器数据被复制 |
-| 非空Bind | 容器目录被遮挡 | 容器数据被复制 |
-| 空卷 | 容器数据被复制  | 容器数据被复制 |
-| 非空卷 | 容器目录被遮挡  | 容器数据被复制 |
-
-这里面的规律如下：
-
 * 容器启动后由 CMD 和 ENTRYPOINT 产生的数据区别于镜像中 COPY/ADD 层的数据，前者我们称之动态数据，后者为静态数据。显然，动态数据不受挂载影响。
-* 宿主机目录优先定律：挂载双方都有数据时，宿主机目录中的数据优先
-* Bind Mounts 与 Named Volumes 有差异
+* 宿主机目录优先定律：挂载双方都有数据时，宿主机目录覆盖容器目录
+* Bind Mounts 与 Named Volumes 有差异：Bind Mounts 任何情况下都会覆盖容器目录，而 Named Volumes 挂载空目录时会先拷贝容器目录的数据
+
+
+Named Volumes 在 Docker 中被推荐为首选方式，它与 Bind Mounts 相比，有以下优点：
+
+* 与 Bind Mounts 相比，Named Volumes 更容易备份或迁移。
+* 可以使用 Docker CLI 命令或 Docker API 来管理。
+* Named Volumes 在 Linux 和 Windows 容器上都能工作。
+* Named Volumes 可以在多个容器之间更安全的共享。
+* Named Volumes 驱动程序允许你在远程主机或云上提供存储、加密或其他功能。
+* 新 Named Volumes 的内容可以由容器预填充。
+
 
 ### 使用卷
 
