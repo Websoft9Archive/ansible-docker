@@ -133,16 +133,24 @@ docker load image
    ```
    > 上述阿里云仓库加速地址仅供参考，建议登录控制台后，从后台[获取](https://cr.console.aliyun.com/cn-zhangjiakou/instances/mirrors)获取
 
-2. 运行如下的命令修改 Docker 默认的仓库设置
+2. 修改 */etc/docker/daemon.json* 文件（如果没有可以增加），插入下值
     ```
-    sudo mkdir -p /etc/docker
-    sudo tee /etc/docker/daemon.json <<-'EOF'
     {
       "registry-mirrors": ["https://f53jxx8r.mirror.aliyuncs.com"]
     }
-    EOF
+    ```
+
+3. 重启服务后生效
+    ```
     sudo systemctl daemon-reload
     sudo systemctl restart docker
+    ```
+
+4. Docker 支持配置多个仓库地址，类似：
+    ```
+    {
+      "registry-mirrors": ["https://registry.docker-cn.com","https://f53jxx8r.mirror.aliyuncs.com","https://docker.mirrors.ustc.edu.cn","http://hub-mirror.c.163.com"]
+    }
     ```
 
 
