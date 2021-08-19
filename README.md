@@ -62,7 +62,7 @@ This program provided by Websoft9 contains a series of software with separate co
 
 #### How to install and view the latest release?
 
-This repository install way is Package isntallation, you can  view the version from [Official URL](https://docs.docker.com/engine/release-notes/).  
+This repository install way is Package isntallation, you can  view the version from [Official URL](https://download.docker.com/linux/centos/7/x86_64/stable/Packages/).  
 We will check [Release version](https://github.com/Websoft9/ansible-docker/releases) regularly. Update and test this project to ensure that users can successfully install the required version of docker.
 
 #### Can I run this repository on Ansible Tower? 
