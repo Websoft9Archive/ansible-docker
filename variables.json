@@ -14,5 +14,5 @@
     "en": "Package isntallation",
     "zh": "包安装"
   },
-  "install_url": "https://docs.docker.com/engine/release-notes/"
+  "install_url": "https://download.docker.com/linux/centos/7/x86_64/stable/Packages/"
 }
