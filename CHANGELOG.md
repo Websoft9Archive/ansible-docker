@@ -1,12 +1,4 @@
-# CHANGELOG
-
-## To do
-
-## Logs
-* 2020-03-14  改写项目
-
-### Bug Fixes
-
-
-### Features
+## Release v20.10.8-1 2021-08-30
+### Fixes and Enhancements
+- update to docker20.10.8, portainer 2.6.3
 
